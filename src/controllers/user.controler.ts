@@ -1,17 +1,5 @@
-import { 
-    Get, 
-    Route, 
-    Post, 
-    Body, 
-    SuccessResponse,
-    FormField,
-    UploadedFiles,
-    UploadedFile,
-    Request
-} from "tsoa";
-import * as express from "express";
-import multer from "multer";
-import { Model } from "sequelize";
+import { Get, Route, Post, SuccessResponse, FormField, UploadedFile } from 'tsoa';
+import { Model } from 'sequelize';
 import { User } from '../data/repositories/user.repository';
 import { UserModel } from '../data/models/models';
 
@@ -19,33 +7,35 @@ import { UserAttributes } from '../data/models/user.model';
 
 const UserRepository = new User(UserModel);
 
-type UserCreationParams = Pick<UserAttributes, "email" | "firstname" | "lastname" | "photourl">;
+// type UserCreationParams = Pick<UserAttributes, 'email' | 'firstname' | 'lastname' | 'photourl'>;
 
-@Route("users")
+@Route('users')
 export default class UserController {
-    @Get("/")
-    public async getUsers(): Promise<Model<any, any>[]> {
-        return UserRepository.getAll();
-    };
+    @Get('/')
+    public async getUsers(): Promise<UserAttributes[]> {
+        return UserRepository.getAll() as unknown as Promise<UserAttributes[]>;
+    }
 
-    @Get("/:id")
-    public async getUserById(id: string): Promise<Model<any, any>> {
-        return UserRepository.getUserById(Number(id)) as Promise<Model<any, any>>;
-    };
+    @Get('/:id')
+    public async getUserById(id: string): Promise<UserAttributes> {
+        return UserRepository.getUserById(Number(id)) as unknown as Promise<UserAttributes>;
+    }
 
-    @SuccessResponse("201", "Created")
-    @Post("/")
+    @SuccessResponse('201', 'Created')
+    @Post('/')
     public async createUser(
-        // @FormField() title: string,
-        // @FormField() description: string,
-        // @UploadedFiles() files: Express.Multer.File[],
-        // @UploadedFile("filename") file: express.Request,
-        @UploadedFile("filename") file: Express.Multer.File,
-        // @Request() request: express.Request
-        // @Body() requestBody: UserCreationParams,
-    ): Promise<any> {
-        // UserRepository.addUser(requestBody);
-        // UserRepository.add(title, file);
-        return file;
+        @FormField() email: string,
+        @FormField() firstname: string,
+        @FormField() lastname: string,
+        @UploadedFile('photofile') photo: Express.Multer.File,
+    ): Promise<Model<any, any>> {
+        const user: UserAttributes = {
+            email: email,
+            firstname: firstname,
+            lastname: lastname,
+            photourl: photo.filename,
+        };
+        const createdUser = await UserRepository.addUser(user);
+        return createdUser;
     }
 }

@@ -1,4 +1,4 @@
-import { ModelCtor, Model} from "sequelize";
+import { ModelCtor, Model } from 'sequelize';
 
 class Abstract {
     model: ModelCtor<Model<any, any>>;
@@ -17,6 +17,6 @@ class Abstract {
     create(data: any) {
         return this.model.create(data);
     }
-}  
+}
 
 export { Abstract };

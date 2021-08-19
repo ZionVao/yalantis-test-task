@@ -1,15 +1,12 @@
-import { Router } from "express";
+import { Router } from 'express';
 import { initUser } from './user';
 
 const ApiPath = {
-    USER: '/users'
+    USER: '/users',
 };
 
 const initApi = (router: Router) => {
-    router
-    .use(ApiPath.USER,
-        initUser()
-    );
+    router.use(ApiPath.USER, initUser());
     return router;
 };
 

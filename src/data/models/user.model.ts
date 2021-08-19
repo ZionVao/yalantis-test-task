@@ -10,12 +10,9 @@ interface UserAttributes {
     updatedAt?: string;
 }
 
-interface UserCreationAttributes extends Optional<UserAttributes, "id"> {}
+interface UserCreationAttributes extends Optional<UserAttributes, 'id'> {}
 
-interface UserInstance
-  extends Model<UserAttributes, UserCreationAttributes>,
-    UserAttributes {}
-
+interface UserInstance extends Model<UserAttributes, UserCreationAttributes>, UserAttributes {}
 
 const init = (orm: Sequelize) => {
     const User = orm.define<UserInstance>(
@@ -25,12 +22,11 @@ const init = (orm: Sequelize) => {
                 primaryKey: true,
                 type: DataTypes.INTEGER,
                 unique: true,
-                autoIncrement: true
+                autoIncrement: true,
             },
             email: {
                 allowNull: false,
                 type: DataTypes.STRING,
-                unique: true
             },
             firstname: {
                 allowNull: false,
@@ -42,14 +38,13 @@ const init = (orm: Sequelize) => {
             },
             photourl: {
                 allowNull: false,
-                type: DataTypes.STRING
-            }
+                type: DataTypes.STRING,
+            },
         },
-        {}
+        {},
     );
 
-  return User;
+    return User;
 };
-
 
 export { init, UserInstance, UserAttributes };

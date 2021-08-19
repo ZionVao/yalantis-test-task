@@ -8,8 +8,8 @@ const sequelize = new Sequelize(
     {
         host: dbConfig.host,
         port: Number(dbConfig.port),
-        dialect: dbConfig.dialect as Dialect
-    } 
+        dialect: dbConfig.dialect as Dialect,
+    },
 );
 
 export { sequelize };

@@ -6,7 +6,7 @@ const {
     PASSWORD: password,
     HOST: host,
     PORT: port,
-    DIALECT: dialect
+    DIALECT: dialect,
 } = ENV.DB;
 
-export { database, username, password, host, port, dialect}
+export { database, username, password, host, port, dialect };
